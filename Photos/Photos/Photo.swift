@@ -20,6 +20,7 @@ class Photo {
     init (data: NSDictionary) {
         // FILL ME IN
         // HINT: use nested .valueForKey() calls, and then cast using 'as! TYPE'
+        
     }
 
 }
