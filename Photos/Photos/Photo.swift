@@ -16,11 +16,15 @@ class Photo {
     /* The username of the photographer. */
     var username : String!
 
+    var liked: Bool = false
     /* Parses a NSDictionary and creates a photo object. */
     init (data: NSDictionary) {
         // FILL ME IN
         // HINT: use nested .valueForKey() calls, and then cast using 'as! TYPE'
-        
+        likes = (data.valueForKey("likes") as! NSDictionary).valueForKey("count") as! Int;
+        url = ((data.valueForKey("images") as! NSDictionary).valueForKey("standard_resolution") as! NSDictionary).valueForKey("url") as! String
+        username = (data.valueForKey("user") as! NSDictionary).valueForKey("username") as! String
+        liked = false
     }
 
 }

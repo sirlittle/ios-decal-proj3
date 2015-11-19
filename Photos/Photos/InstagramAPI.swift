@@ -23,18 +23,22 @@ class InstagramAPI {
          *       d. Wait for completion of Photos array
          */
         // FILL ME IN
-        var url: NSURL = Utils.getPopularURL()
-
+        let url: NSURL = Utils.getPopularURL()
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) {
             (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             if error == nil {
                 //FIX ME
-                var photos: [Photo]!
+                var photos: [Photo]! = []
                 do {
                     let feedDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
                     // FILL ME IN, REMEMBER TO USE FORCED DOWNCASTING
-                    
-                    
+                    var list : NSArray
+                    list = feedDictionary.valueForKey("data") as! NSArray
+                    for item in list{
+                        if(((item as! NSDictionary).valueForKey("type") as! String) == "image"){
+                            photos.append(Photo(data: item as! NSDictionary))
+                        }
+                    }
                     // DO NOT CHANGE BELOW
                     let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
                     dispatch_async(dispatch_get_global_queue(priority, 0)) {
@@ -48,5 +52,6 @@ class InstagramAPI {
             }
         }
         task.resume()
+        print("done loading pics")
     }
 }
